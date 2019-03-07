@@ -1,0 +1,12 @@
+tags
+**/CMakeFiles/*
+**/CMakeCache*
+**/cmake_install*
+**/Makefile
+**/Testing/*
+**/CTest*
+lib/*
+bin/*
+src/brute_force_search_old.*
+levels/level*
+cmake_clean.bat
