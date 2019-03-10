@@ -14,7 +14,7 @@ void GaussianEliminationGF2<COUNT>::log_current_state() const {
     for (unsigned i = 0; i < m_count; i++) {
         LOG(setw(3) << i << " | ");
         for (unsigned j = 0; j < m_count; j++) {
-            LOG(m_toggle[i].test(j));
+            LOG(m_matrix[i].test(j));
         }
         LOG(string(max(0, 7 - static_cast<int>(m_count)), ' '));
         LOG(" | " << m_puzzle[i] << '\n');
@@ -28,7 +28,7 @@ template<unsigned COUNT>
 optional<unsigned> GaussianEliminationGF2<COUNT>::find_pivot_row(unsigned pivot_col,
                                                                  unsigned start_row) const {
     for (unsigned row = start_row; row < m_count; row++) {
-        if (m_toggle[row][pivot_col]) { return row; }
+        if (m_matrix[row][pivot_col]) { return row; }
     }
 
     return nullopt;
@@ -40,7 +40,7 @@ template<unsigned COUNT>
 optional<unsigned> GaussianEliminationGF2<COUNT>::find_pivot_col(unsigned pivot_row,
                                                                  unsigned start_col) const {
     for (unsigned col = start_col; col < m_count; col++) {
-        if (m_toggle[pivot_row][col]) { return col; }
+        if (m_matrix[pivot_row][col]) { return col; }
     }
 
     return nullopt;
@@ -49,10 +49,7 @@ optional<unsigned> GaussianEliminationGF2<COUNT>::find_pivot_col(unsigned pivot_
 // reduces given system to row echelon form according to Gaussian algorithm
 template<unsigned COUNT>
 void GaussianEliminationGF2<COUNT>::forward_elimination() {
-    LOG("Before forward elimination\n");
-    LOG_FN(log_current_state());
-
-    // swaps the puzzle bit values puzzle at given positions
+    // swaps the puzzle bit values at given positions
     auto puzzle_swap = [this](unsigned i, unsigned j) {
         const bool old_val = m_puzzle[i];
         m_puzzle[i] = m_puzzle[j];
@@ -66,21 +63,19 @@ void GaussianEliminationGF2<COUNT>::forward_elimination() {
 
         const unsigned pivot_row = fresult.value();
         if (pivot_row != next_free_row) {
-            swap(m_toggle[pivot_row], m_toggle[next_free_row]);
+            swap(m_matrix[pivot_row], m_matrix[next_free_row]);
             puzzle_swap(pivot_row, next_free_row);
         }
 
         for (unsigned row = pivot_row + 1; row < m_count; row++) {
-            if (m_toggle[row][col]) {
-                m_toggle[row] = m_toggle[row] ^ m_toggle[next_free_row];
+            if (m_matrix[row][col]) {
+                m_matrix[row] = m_matrix[row] ^ m_matrix[next_free_row];
                 m_puzzle[row] = m_puzzle[row] ^ m_puzzle[next_free_row];
             }
         }
 
         next_free_row++;
     }
-    LOG("After forward elimination\n");
-    LOG_FN(log_current_state());
 }
 
 // puts the matrix into reduced row echelon form and calculates the result bits
@@ -95,12 +90,12 @@ void GaussianEliminationGF2<COUNT>::back_substitute(bitvector & result,
 
         result[pivot_col] = m_puzzle[row];
         for (unsigned col = pivot_col + 1; col < m_count; col++) {
-            result[pivot_col] = result[pivot_col] ^ (m_toggle[row][col] && result[col]);
+            result[pivot_col] = result[pivot_col] ^ (m_matrix[row][col] && result[col]);
         }
     }
 }
 
-// finds all the result bits indixes that will not change if we perform the
+// finds all the result bits indexes that will not change if we perform the
 // reverse substitution
 template<unsigned COUNT>
 vector<unsigned> GaussianEliminationGF2<COUNT>::find_free_indexes() const {
@@ -124,14 +119,20 @@ vector<unsigned> GaussianEliminationGF2<COUNT>::find_free_indexes() const {
 
 template<unsigned COUNT>
 vector<typename GaussianEliminationGF2<COUNT>::bitvector>
-GaussianEliminationGF2<COUNT>::solve(const bitmatrix & neighbors, const bitvector & puzzle,
+GaussianEliminationGF2<COUNT>::solve(const bitmatrix & matrix, const bitvector & puzzle,
                                      const unsigned count) {
-    m_toggle = neighbors;
+    m_matrix = matrix;
     m_count  = count;
     m_puzzle = puzzle;
 
+    LOG("Before forward elimination\n");
+    LOG_FN(log_current_state());
+
     // Reduce the given system to row echelon form.
     forward_elimination();
+
+    LOG("After forward elimination\n");
+    LOG_FN(log_current_state());
 
     // Now we can check if solution does not exist. If the whole row consists of zeros
     // and the corresponding puzzle value is one, return empty container
@@ -150,8 +151,6 @@ GaussianEliminationGF2<COUNT>::solve(const bitmatrix & neighbors, const bitvecto
     // will give us all posible solutions of this puzzle.
     const auto free_indexes{find_free_indexes()};
 
-    /* bitvector best_result; */
-    /* unsigned best_count = m_count + 1; */
     vector<bitvector> results;
     const unsigned ubound = 1 << free_indexes.size();
     for (unsigned cur = 0; cur < ubound; cur++) {

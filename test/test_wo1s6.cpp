@@ -242,7 +242,7 @@ BOOST_AUTO_TEST_CASE(Section6Level19)
 {
     const char * indata = 1 + R"(
 .d_odO_X.
-X-------X
+X_______X
 __O.dX.__
 XD_X_X_dX
 __od.dX__

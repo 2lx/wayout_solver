@@ -2,24 +2,25 @@
 #define WAYOUT_FORMATTER_H
 
 #include "wayout_common.h"
+#include <optional>
 
 namespace WayOut
 {
 class Formatter {
 public:
-    enum {
-        I_NONE = 0,     I_NRMU, I_NRMD,
-        I_HORU, I_HORD, I_VERU, I_VERD,
-        I_DIAU, I_DIAD,
-        I_ONEU, I_ONED, I_SLPU, I_SLPD,
+    enum ICONVENTION {
+        I_NONE = 0,     I_NORU, I_NORD,
+        I_HARU, I_HARD, I_VARU, I_VARD,
+        I_DARU, I_DARD,
+        I_SINU, I_SIND, I_YELU, I_YELD,
         I_PLSU, I_PLSD, I_DBLU, I_DBLD
     };
 
-    enum {
+    enum OCONVENTION {
         O_NONE = 0, O_TOGG, O_REST
     };
 
-    static Tile  encode_tail(const char iformat[], const char ch);
+    static std::optional<Tile>  encode_tail(const char iformat[], const char ch);
     static State encode_state(const char iformat[], const char ch);
     static char to_char(const uint num);
 };

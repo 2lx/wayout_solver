@@ -2,7 +2,8 @@
 #include "wayout_formatter.h"
 #include "wayout_solving_algorithm.h"
 
-#include <iostream>
+#include <istream>
+#include <ostream>
 #include <algorithm>
 
 using namespace std;
@@ -24,19 +25,24 @@ pair<bool, uint> Solver::solve() {
 
 bool Solver::read_level_data(std::istream & stream, const char iformat[]) {
     string line;
-    uint height = 0;
+    uint height = 0, width = 0;
     vector<pair<Tile, State>> level;
 
     // TODO: check input data for errors
     while (stream >> line) {
         if (line.empty()) { continue; }
+        if (width == 0) { width = line.length(); }
+        if (width != line.length()) { return false; }
+
         for(const auto ch: line) {
-            auto tile  = Formatter::encode_tail(iformat, ch);
             auto state = Formatter::encode_state(iformat, ch);
-            level.push_back(make_pair(tile, state));
+            auto tile  = Formatter::encode_tail(iformat, ch);
+            if (!tile.has_value()) { return false; }
+            level.push_back(make_pair(*tile, state));
         }
         height++;
     }
+    if (level.empty()) { return false; }
 
     return m_arena->initialize(level, level.size() / height, height);
 }

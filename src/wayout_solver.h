@@ -1,12 +1,12 @@
 #ifndef WAYOUT_SOLVER_H
 #define WAYOUT_SOLVER_H
 
-#include "wayout_arena.h"
-
 #include <iosfwd>
 #include <vector>
 #include <utility>
 #include <memory>
+
+#include "wayout_arena.h"
 
 namespace WayOut
 {

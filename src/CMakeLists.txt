@@ -7,7 +7,7 @@ add_executable(WayOut1Solver main.cpp)
 target_link_libraries(WayOut1Solver WO1SLib)
 
 add_library(WO2SLib ${WOS_SRC})
-target_compile_definitions(WO2SLib PRIVATE WAYOUT2)
+target_compile_definitions(WO2SLib PUBLIC WAYOUT2)
 target_include_directories(WO2SLib PRIVATE common)
 add_executable(WayOut2Solver main.cpp)
 target_link_libraries(WayOut2Solver WO2SLib)

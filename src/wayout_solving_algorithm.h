@@ -1,3 +1,5 @@
+// Represents the main solution algorithm of WayOut puzzles.
+
 #ifndef WAYOUT_SOLVING_ALGORITHM_H
 #define WAYOUT_SOLVING_ALGORITHM_H
 
