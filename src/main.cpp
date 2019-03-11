@@ -28,7 +28,7 @@ void print_prompt() {
         {Formatter::I_DBLU, Formatter::I_DBLD, "double dot"},
     };
 
-    cout << "Tiles conventions (mode on, mode off, description)\n";
+    cout << "Coding rules for tiles (mode on/off, description)\n";
     for (const auto [ind1, ind2, descr]: conventions) {
         cout << "'" << input_alphabet[ind1] << "' '"
              << input_alphabet[ind2] << "' - " << descr << '\n';
