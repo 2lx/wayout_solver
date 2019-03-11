@@ -208,7 +208,7 @@ vector<pair<uint, uint>> SolvingAlgorithm::get_yellows_neighbors_with_priorities
 
 // Gets the vector of indexes and priorities of the tiles that surround
 // the yellow tiles. On each iteration the method toggles the tile at
-// the maximal priority and reconstruct the vector. Repeats until there are
+// the maximal priority and reconstructs the vector. Repeats until there are
 // no yellow tiles in the puzzle.
 void SolvingAlgorithm::toggle_yellow_tiles(list<uint> & matrix_indexes,
                                            vector<uint> & final_indexes) const {
@@ -330,7 +330,8 @@ unique_ptr<Arena> SolvingAlgorithm::solve(unique_ptr<Arena> arena) {
     uint min_count = 2 * m_arena->count();
 
     // for each solution find the close to minimal number of toggles that it takes
-    // and remember the smallest one.
+    // and remember the smallest one. If the number of toggles is not less than
+    // the minimal found skip this pair
     for (auto & [dbldot_state, indexes]: toggles_pairs) {
         if (indexes.size() >= min_count) { continue; }
 

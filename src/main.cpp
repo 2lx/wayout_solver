@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    cout << "Solution found (" << result.second << " toggle(s)):" << endl;
+    cout << "Solution found (" << result.second << " moves):" << endl;
     solver.print_solution(cout, output_alphabet);
     return 0;
 }
