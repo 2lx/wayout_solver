@@ -21,7 +21,7 @@ I did not aim to implement a user-friendly interface, the only goal was the algo
 
 <img align="center" width="500" src="../assets/images/screencapture.gif">
 
-Also, you can make the special version of the program, which log algorithm decisions in console output:
+Also, you can make the special version of the program, which log algorithm decisions in the console output:
 
 ```
 > make WayOut1Logging
@@ -31,13 +31,13 @@ Also, you can make the special version of the program, which log algorithm decis
 
 ---
 
-### Tile encoding examples
+### Level format
 
-You can see the table of coding rules for tiles, just run the program without arguments:
+You can see the format for representing WayOut levels, just run the program without arguments:
 
 <img align="center" width="500" src="../assets/images/coding_rules.png">
 
-The position of the coordinate axes for both games is shown below.
+The positions of the coordinate axes for both games are shown below.
 
 <img align="left" width="400" height="200" src="../assets/images/wo1_s4_20.png">
 
