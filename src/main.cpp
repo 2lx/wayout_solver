@@ -6,8 +6,8 @@
 using namespace std;
 using namespace WayOut;
 
-const char * input_alphabet  = "_X.HhVvNnOoYyPpDd";
-const char * output_alphabet = " X.";
+constexpr char input_alphabet[]  = "_X.HhVvNnOoYyPpDd";
+constexpr char output_alphabet[] = " X.";
 
 void print_prompt() {
     const tuple<uint, uint, const char *> conventions[] = {

@@ -4,7 +4,6 @@
 #define WAYOUT_SOLVING_ALGORITHM_H
 
 #include "wayout_common.h"
-#include "wayout_arena.h"
 
 #include <memory>
 #include <vector>
@@ -13,7 +12,9 @@
 #include <functional>
 #include <list>
 
-namespace WayOut {
+namespace WayOut
+{
+class Arena;
 
 class SolvingAlgorithm {
 private:

@@ -6,17 +6,17 @@
 #include <utility>
 #include <memory>
 
-#include "wayout_arena.h"
-
 namespace WayOut
 {
+class Arena;
+
 class Solver {
-private:
     std::unique_ptr<Arena> m_arena;
     std::vector<uint> m_result;
 
 public:
     Solver();
+    ~Solver();
 
     bool read_level_data(std::istream & stream, const char iformat[] = "_X.HhVvNnOoYyPpDd");
     std::pair<bool, uint> solve();

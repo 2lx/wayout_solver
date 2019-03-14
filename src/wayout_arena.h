@@ -43,7 +43,7 @@ public:
 
     inline uint width() const                            { return m_width; }
     inline uint height() const                           { return m_height; }
-    inline uint count() const                            { return m_tiles.size(); }
+    inline uint count() const                            { return static_cast<uint>(m_tiles.size()); }
 
     inline Tile tile(const uint index) const             { return m_tiles[index]; }
     inline const std::vector<Tile> & tiles() const       { return m_tiles; }

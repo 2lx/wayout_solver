@@ -1,5 +1,6 @@
 #include "wayout_solver.h"
 #include "wayout_formatter.h"
+#include "wayout_arena.h"
 #include "wayout_solving_algorithm.h"
 
 #include <istream>
@@ -9,8 +10,10 @@
 using namespace std;
 using namespace WayOut;
 
-Solver::Solver() : m_arena{new Arena}, m_result{} {
+Solver::Solver() : m_arena{ make_unique<Arena>() }, m_result{} {
 }
+
+Solver::~Solver() = default;
 
 pair<bool, uint> Solver::solve() {
     {
@@ -28,10 +31,9 @@ bool Solver::read_level_data(std::istream & stream, const char iformat[]) {
     uint height = 0, width = 0;
     vector<pair<Tile, State>> level;
 
-    // TODO: check input data for errors
     while (stream >> line) {
         if (line.empty()) { continue; }
-        if (width == 0) { width = line.length(); }
+        if (width == 0) { width = static_cast<uint>(line.length()); }
         if (width != line.length()) { return false; }
 
         for(const auto ch: line) {
@@ -44,7 +46,7 @@ bool Solver::read_level_data(std::istream & stream, const char iformat[]) {
     }
     if (level.empty()) { return false; }
 
-    return m_arena->initialize(level, level.size() / height, height);
+    return m_arena->initialize(level, width, height);
 }
 
 void Solver::print_solution(ostream & stream, const char oformat[4], bool print_numbers) const {

@@ -1,5 +1,6 @@
 #include "wayout_solving_algorithm.h"
 #include "gaussian_elimination_gf2.h"
+#include "wayout_arena.h"
 #include "num_range.h"
 
 #include <algorithm>
@@ -347,7 +348,7 @@ unique_ptr<Arena> SolvingAlgorithm::solve(unique_ptr<Arena> arena) {
         if (result.has_value() && !result->empty() && result->size() < min_count) {
             LOG("\nwe've got the new minimal solution with " << result->size() << " moves!");
 
-            min_count = result->size();
+            min_count = static_cast<uint>(result->size());
             m_result = move(result.value());
         }
         LOG('\n' << endl);

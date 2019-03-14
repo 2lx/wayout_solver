@@ -50,13 +50,3 @@ State Formatter::encode_state(const char iformat[], const char ch) {
     }
 }
 
-char Formatter::to_char(const uint num) {
-    if (num < 10) {
-        return static_cast<char>('0' + num);
-    } else if (num < 36) {
-        return static_cast<char>('A' + num - 10);
-    } else {
-        return 'Z';
-    }
-}
-
