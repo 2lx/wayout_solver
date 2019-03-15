@@ -59,12 +59,12 @@ bitmatrix SolvingAlgorithm::compress_toggle_matrix() const {
         compressed_toggles[n][n] = true;
     }
 
-    return move(compressed_toggles);
+    return compressed_toggles;
 }
 
 // Compresses the puzzle to the puzzle without missed tiles.
 bitvector SolvingAlgorithm::compress_puzzle_vector(bool dbldot_state) const {
-    bitvector compressed_puzzle{m_arena->states()};
+    bitvector compressed_puzzle{ m_arena->states() };
 
     for (const auto n: numrange(0u, compressed_count)) {
         const uint global_n = to_global[n];
@@ -78,7 +78,7 @@ bitvector SolvingAlgorithm::compress_puzzle_vector(bool dbldot_state) const {
         }
     }
 
-    return move(compressed_puzzle);
+    return compressed_puzzle;
 }
 
 // Compresses the toggle matrix and puzzle, decides the resulting system of
@@ -117,7 +117,7 @@ vector<pair<bool, list<uint>>> SolvingAlgorithm::compress_and_solve_toggle_matri
         fn_process_geresults(false);
     }
 
-    return move(results);
+    return results;
 }
 
 // For each matrix_indexes's index that gives pred(index) is true, does:
@@ -204,7 +204,7 @@ vector<pair<uint, uint>> SolvingAlgorithm::get_yellows_neighbors_with_priorities
         }
     }
 
-    return move(result);
+    return result;
 }
 
 // Gets the vector of indexes and priorities of the tiles that surround
@@ -319,7 +319,7 @@ std::optional<vector<uint>> SolvingAlgorithm::complete_solution(
         return nullopt;
     }
 
-    return move(final_indexes);
+    return final_indexes;
 }
 
 // the main method that solves the wayout puzzle

@@ -114,7 +114,7 @@ vector<unsigned> GaussianEliminationGF2<COUNT>::find_free_indexes() const {
             break;
         }
     }
-    return move(free_indexes);
+    return free_indexes;
 }
 
 template<unsigned COUNT>
@@ -166,7 +166,7 @@ GaussianEliminationGF2<COUNT>::solve(const bitmatrix & matrix, const bitvector &
         results.push_back(move(result));
     }
 
-    return move(results);
+    return results;
 }
 
 #endif
