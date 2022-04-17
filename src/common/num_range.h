@@ -1,3 +1,6 @@
+#ifndef NUM_RANGE_H
+#define NUM_RANGE_H
+
 #include "num_iterator.h"
 
 template <class T>
@@ -10,3 +13,5 @@ public:
     num_iterator<T> begin() const { return num_iterator<T>{_from}; }
     num_iterator<T> end()   const { return num_iterator<T>{_to};   }
 };
+
+#endif

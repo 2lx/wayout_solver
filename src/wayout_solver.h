@@ -5,6 +5,7 @@
 #include <vector>
 #include <utility>
 #include <memory>
+#include "wayout_common.h"
 
 namespace WayOut
 {
